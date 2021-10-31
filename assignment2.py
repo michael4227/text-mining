@@ -95,47 +95,50 @@ def print_most_common(hist, num=10):
 
     hist: histogram (map from word to frequency)
     num: number of words to print
-    a: the string used by the similarity function to compare the "most frequently used words" among the three books
     """
     t = most_common(hist)
     a = ''
     print('The most common words are:')
     for freq, word in t[:num]:
         print(word, '\t', freq)
-        a += word
+
+
+def similarity(hist, num=10):
+    """Prints the most commons words in a histgram and their frequencies.
+
+    hist: histogram (map from word to frequency)
+    num: number of words to print
+    a: the string used by the similarity function to compare the "most frequently used words" among the three books
+    """
+    t = most_common(hist)
+    a = ''
+    print('The most common words are:')
+    for word in t[:num]:
+        a += word[1] + ' '
     return a
 
-# def similarity(hist, num=10):
-#     """Prints the most commons words in a histgram and their frequencies.
-
-#     hist: histogram (map from word to frequency)
-#     num: number of words to print
-#     """
-#     t = most_common(hist)
-#     a = ''
-#     print('The most common words are:')
-#     for word in t[:num]:
-#         a += word
-#         print(a)
-#     return a
+def print_fuzz_similarity(similarity1):
+    '''    
+    # book0 = similarity[0]
+    # book1 = similarity[1]
+    # book2 = similarity[2]...
+    # this function is used to print out the similarities between the top ten used words of each all the books analyzed'''
+    for i in range(len(similarity1)):
+        if i == (len(similarity1)-1):
+            print(f'The similarity between the top 10 words in book{i} and book0 is: {fuzz.token_sort_ratio(similarity1[i],similarity1[0])}')
+        else:
+            print(f'The similarity between the top 10 words in book{i} and book{i+1} is: {fuzz.token_sort_ratio(similarity1[i],similarity1[i+1])}')
 
 def main():
     similarity1 = []
     for i in range(3):
         hist = process_file(f'730-{i}.txt', skip_header=True)
-        print('The book name:', bookname(f'730-{i}.txt'),'  Below are the analytical information')
+        print('The book name:', bookname(f'730-{i}.txt'),'  Below are the analytical information:')
         print('Total number of words:', total_words(hist))
         print('Number of different words:', different_words(hist), '\r')
         print_most_common(hist,num=10)
-    #     similarity1.append(similarity(hist,num=10))
-    # print(similarity)
-    # book0 = similarity[0]
-    # book1 = similarity[1]
-    # book2 = similarity[2]
-    # similarity_between_01 = fuzz.ratio(book0,book1)
-    # similarity_between_12 = fuzz.ratio(book2,book1)
-    # similarity_between_02 = fuzz.ratio(book2,book0)
-    # print(f'The similarity between book 0 and 1 is {similarity_between_01},The similarity between book 1 and 2 is {similarity_between_12},The similarity between book 0 and 2 is {similarity_between_02}')
-
+        similarity1.append(similarity(hist,num=10))
+    print(similarity1)
+    print_fuzz_similarity(similarity1)
 if __name__ == '__main__':
     main()
