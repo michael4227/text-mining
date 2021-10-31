@@ -95,6 +95,7 @@ def print_most_common(hist, num=10):
 
     hist: histogram (map from word to frequency)
     num: number of words to print
+    a: the string used by the similarity function to compare the "most frequently used words" among the three books
     """
     t = most_common(hist)
     a = ''
