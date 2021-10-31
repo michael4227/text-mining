@@ -1,0 +1,22 @@
+1. Project Overview [~1 paragraph] What data source(s) did you use and what technique(s) did you use analyze/process them? What did you hope to learn/create?
+    The three data sources I used are three books by Charles Dickenson. Due to MacOS certification issues, I was not able to directly using the url to locate the txt file online, so I downloaded the three books, Oliver Twist as 730-0, David Copperfield as 730-1, and Bleak House as 730-2. I counted their total word counts, the number of different words in each book, and the most common words (top 10) in each book. I hope to get a brief understanding of the basic information of the book, and the words that often appear in the book. My intention was also creating a program to help me compare the similarities between the books I chose using TheFuzz library, but I failed figuring out the logic of picking two strings from the outcome of three "for" loops. 
+
+
+
+2. Implementation [~2-3 paragraphs] Describe your implementation at a system architecture level. You should NOT walk through your code line by line, or explain every function (we can get that from your docstrings). Instead, talk about the major components, algorithms, data structures and how they fit together. You should also discuss at least one design decision where you had to choose between multiple alternatives, and explain why you made the choice you did.
+    I created the code for this assignment based on my answer for the analyze_book assignment and the answer key for that assignment. Functions are created to achieve different analytical purposes. In the main section, it goes through the list of functions three times[based on the number of books]. Each time, a new file name is provided so that the 'hist,' used to conduct the analysis, is different each time because of the different book provided. I created a "for" loop to let the program go through 3 books one by one to use the functions above. I chose to include this for loop here because if I am to include more books, I can just simply change the range number, and add addtional books into the assignment folder following the "730-{i}" naming rule.
+
+    As for the similarity comparison, I was intended to create a string consisted of the top 10 words for each book. Then, compare the strings using 'fuzz.ratio' function to see whether it is possible to qualify the commonality between the three books from the word choice factor. I was expecting a high ratio because the three books are written by the same author and his word choices should not vary a lot.
+
+
+3. Results [~2-3 paragraphs + figures/examples] Present what you accomplished:
+If you did some text analysis, what interesting things did you find? Graphs or other visualizations may be very useful here for showing your results.
+If you created a program that does something interesting (e.g. a Markov text synthesizer), be sure to provide a few interesting examples of the program's output.
+    I found that Oliver Twist is the shortest book among the three books, which is around 160000 words. The other two are around 350000 words. However, there is not a correlation between the length of the book and the number of different words used by the book. From the content perspective, since the word "said" occurs a lot across all the three books, I am infering that the writer is prone to use dialogs or characters' languages to articulate the story plot and build the persona of characters.
+
+    Through the most used words analysis across the three books, I can also get to know the main characters for each book. However, there are still a lot of irrelavent words repeated again and again in the book, from which no significant conclusions can be drawn apon. To tacke this, I need to do further data scribing by adding those words in the stopwords.txt document.
+
+
+
+4. Reflection [~1 paragraph] From a process point of view, what went well? What could you improve? Other possible reflection topics: Was your project appropriately scoped? Did you have a good plan for testing? How will you use what you learned going forward? What do you wish you knew before you started that would have helped you succeed?
+    The process of changing the code we have written in the past and applying them for a new document wen well, but it took me a very long time to figure out the small problems causing me to receive unexpected results. Going back to the raw data document is really important because sometimes the code could be totally correct, but just not in line with the content of the documents. 

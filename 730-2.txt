@@ -1,4 +1,4 @@
-﻿The Project Gutenberg eBook, Bleak House, by Charles Dickens
+The Project Gutenberg eBook, Bleak House, by Charles Dickens
 
 
 This eBook is for the use of anyone anywhere at no cost and with
@@ -24,7 +24,7 @@ Language: English
 Character set encoding: ISO-646-US (US-ASCII)
 
 
-***START OF THE PROJECT GUTENBERG EBOOK BLEAK HOUSE***
+*** START OF THE PROJECT GUTENBERG EBOOK BLEAK HOUSE***
 
 
 E-text prepared by Donald Lainson, Toronto, Canada,

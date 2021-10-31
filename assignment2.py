@@ -2,6 +2,11 @@ import random
 import string
 import sys
 from unicodedata import category
+# from nltk.sentiment.vader import SentimentIntensityAnalyzer
+# import nltk
+# nltk.download('vader_lexicon')
+from thefuzz import fuzz
+
 
 def process_file(filename, skip_header):
     """Makes a histogram that contains the words from a file.
@@ -19,7 +24,7 @@ def process_file(filename, skip_header):
 
     strippables = string.punctuation + string.whitespace
     for line in fp:
-        if line.startswith('*** END OF THE PROJECT'):
+        if line.startswith('*** END OF'):
             break
 
         line = line.replace('-', ' ')
@@ -31,7 +36,6 @@ def process_file(filename, skip_header):
 
             # update the dictionary
             hist[word] = hist.get(word, 0) + 1
-
     return hist
 
 def bookname(filename):
@@ -47,7 +51,7 @@ def skip_gutenberg_header(fp):
     fp: open file object
     """
     for line in fp:
-        if line.startswith('*** START OF THE PROJECT'):
+        if line.startswith('*** START OF'):
             break
 
 
@@ -71,7 +75,7 @@ def most_common(hist, excluding_stopwords=True):
     """
     t = []
 
-    stopwords = process_file('text-mining/stopwords.txt', False)
+    stopwords = process_file('stopwords.txt', False)
 
     stopwords = list(stopwords.keys())
     # print(stopwords)
@@ -86,7 +90,6 @@ def most_common(hist, excluding_stopwords=True):
     t.sort(reverse=True)
     return t
 
-
 def print_most_common(hist, num=10):
     """Prints the most commons words in a histgram and their frequencies.
 
@@ -94,33 +97,44 @@ def print_most_common(hist, num=10):
     num: number of words to print
     """
     t = most_common(hist)
+    a = ''
     print('The most common words are:')
     for freq, word in t[:num]:
         print(word, '\t', freq)
+        a += word
+    return a
 
+# def similarity(hist, num=10):
+#     """Prints the most commons words in a histgram and their frequencies.
 
-
-# def main():
-#     hist = process_file('text-mining/730-0.txt', skip_header=True)
-#     print('The book name:', bookname('text-mining/730-0.txt'))
-#     print('Total number of words:', total_words(hist))
-#     print('Number of different words:', different_words(hist))
-
-#     t = most_common(hist, excluding_stopwords=True)
+#     hist: histogram (map from word to frequency)
+#     num: number of words to print
+#     """
+#     t = most_common(hist)
+#     a = ''
 #     print('The most common words are:')
-#     for word,freq in t[0:20]:
-#             print(word, '\t', freq)
+#     for word in t[:num]:
+#         a += word
+#         print(a)
+#     return a
 
 def main():
+    similarity1 = []
     for i in range(3):
-        hist = process_file(f'text-mining/730-{i}.txt', skip_header=True)
-        print('The book name:', bookname(f'text-mining/730-{i}.txt'))
+        hist = process_file(f'730-{i}.txt', skip_header=True)
+        print('The book name:', bookname(f'730-{i}.txt'),'  Below are the analytical information')
         print('Total number of words:', total_words(hist))
         print('Number of different words:', different_words(hist), '\r')
-        t = most_common(hist, excluding_stopwords=True)
-        print('The most common words are:')
-        for word,freq in t[0:20]:
-                print(word, '\t', freq)
+        print_most_common(hist,num=10)
+    #     similarity1.append(similarity(hist,num=10))
+    # print(similarity)
+    # book0 = similarity[0]
+    # book1 = similarity[1]
+    # book2 = similarity[2]
+    # similarity_between_01 = fuzz.ratio(book0,book1)
+    # similarity_between_12 = fuzz.ratio(book2,book1)
+    # similarity_between_02 = fuzz.ratio(book2,book0)
+    # print(f'The similarity between book 0 and 1 is {similarity_between_01},The similarity between book 1 and 2 is {similarity_between_12},The similarity between book 0 and 2 is {similarity_between_02}')
 
 if __name__ == '__main__':
     main()
